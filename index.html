@@ -3,43 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calcolatore Conto Termico 3.0</title>
+    <title>Conto Termico 3.0 Advisor</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 min-h-screen font-sans">
+<body class="bg-gray-50 min-h-screen font-sans pb-10">
 
-    <header class="bg-blue-700 text-white p-6 shadow-lg mb-8">
-        <h1 class="text-2xl font-bold text-center uppercase tracking-wide">Conto Termico 3.0</h1>
-        <p class="text-center text-blue-100 text-sm mt-2">Calcolatore Incentivi e Aliquote- Ing. E.Domestico(EGE)-Ing. M. Santelli(EGE), La Diagnosi Energetica è obbligatoria per interventi II.A,II.D. e per potenze superiori a 200 kWt</p>
-    </header>
-
-    <main class="max-w-4xl mx-auto px-4">
-        
-        <div id="app-container" class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-            </div>
-
-        <div id="navigation-controls" class="mt-6 text-center hidden">
-            <button onclick="renderHome()" class="text-blue-600 hover:underline font-medium">
-                &larr; Torna alla selezione iniziale
-            </button>
-        </div>
-    </main>
-
-    <script>
-        const app = document.getElementById('app-container');
-        const nav = document.getElementById('navigation-controls');
-<script src="https://cdn.tailwindcss.com"></script>
-
-<div class="bg-gray-50 min-h-screen font-sans pb-10">
     <header class="bg-blue-800 text-white p-6 shadow-md mb-8">
         <h1 class="text-2xl font-bold text-center uppercase tracking-wider">Conto Termico 3.0</h1>
-        <p class="text-center text-blue-100 text-sm mt-1">Calcolatore Incentivi - Supporto Decisionale-Powered by E.Domestico</p>
+        <p class="text-center text-blue-100 text-sm mt-1">Calcolatore Incentivi e Aliquote- Ing. E.Domestico(EGE)-Ing. M. Santelli(EGE), La Diagnosi Energetica è obbligatoria per interventi II.A,II.D. e per potenze superiori a 200 kWt</p>
     </header>
 
     <main class="max-w-4xl mx-auto px-4">
-        <div id="app-container" class="bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-gray-200">
-            </div>
-
+        <div id="app-container" class="bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-gray-200"></div>
         <div id="navigation-controls" class="mt-6 text-center hidden">
             <button onclick="renderHome()" class="text-blue-600 hover:text-blue-800 font-semibold flex items-center justify-center mx-auto transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -49,292 +24,244 @@
             </button>
         </div>
     </main>
-</div>
 
-<script>
-    const app = document.getElementById('app-container');
-    const nav = document.getElementById('navigation-controls');
+    <script>
+        const app = document.getElementById('app-container');
+        const nav = document.getElementById('navigation-controls');
 
-    // Database Interventi
-    const INTERVENTI = {
-        titolo2: [
-            { id: 'II.A', label: 'II.A - Isolamento termico' },
-            { id: 'II.B', label: 'II.B - Infissi' },
-            { id: 'II.C', label: 'II.C - Schermature solari' },
-            { id: 'II.D', label: 'II.D - Edifici nZEB' },
-            { id: 'II.E', label: 'II.E - Illuminazione efficiente' },
-            { id: 'II.F', label: 'II.F - Building Automation' },
-            { id: 'II.G', label: 'II.G - Ricarica veicoli elettrici' },
-            { id: 'II.H', label: 'II.H - Fotovoltaico' }
-        ],
-        titolo3: [
-            { id: 'III.A', label: 'III.A - Pompe di calore' },
-            { id: 'III.B', label: 'III.B - Sistemi ibridi' },
-            { id: 'III.C', label: 'III.C - Caldaie a biomassa' },
-            { id: 'III.D', label: 'III.D - Solare termico' },
-            { id: 'III.E', label: 'III.E - Scaldacqua PDC' },
-            { id: 'III.F', label: 'III.F - Teleriscaldamento' },
-            { id: 'III.G', label: 'III.G - Microcogenerazione' }
-        ]
-    };
+        // DATABASE COMPLETO SECONDO FOTO
+        const INTERVENTI_DB = {
+            titolo2: [
+                { id: 'II.A', label: 'II.A - Isolamento termico' },
+                { id: 'II.B', label: 'II.B - Infissi' },
+                { id: 'II.C', label: 'II.C - Schermature solari' },
+                { id: 'II.D', label: 'II.D - Edifici nZEB' },
+                { id: 'II.E', label: 'II.E - Illuminazione efficiente' },
+                { id: 'II.F', label: 'II.F - Building Automation' },
+                { id: 'II.G', label: 'II.G - Ricarica veicoli elettrici' },
+                { id: 'II.H', label: 'II.H - Fotovoltaico' }
+            ],
+            titolo3: [
+                { id: 'III.A', label: 'III.A - Pompe di calore' },
+                { id: 'III.B', label: 'III.B - Sistemi ibridi' },
+                { id: 'III.C', label: 'III.C - Caldaie a biomassa' },
+                { id: 'III.D', label: 'III.D - Solare termico' },
+                { id: 'III.E', label: 'III.E - Scaldacqua PDC' },
+                { id: 'III.F', label: 'III.F - Teleriscaldamento' },
+                { id: 'III.G', label: 'III.G - Microcogenerazione' }
+            ]
+        };
 
-    // 1. Schermata Principale
-    function renderHome() {
-        nav.classList.add('hidden');
-        app.innerHTML = `
-            <h2 class="text-xl font-bold text-gray-800 mb-6 text-center">
-                Identifica il soggetto responsabile per calcolare le aliquote corrette
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <button onclick="selectSoggetto('privato')" class="group p-6 border-2 border-gray-100 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all text-center">
-                    <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">🏠</div>
-                    <span class="block font-bold text-blue-700">Privato</span>
-                </button>
-                <button onclick="selectSoggetto('impresa')" class="group p-6 border-2 border-gray-100 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all text-center">
-                    <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">🏢</div>
-                    <span class="block font-bold text-blue-700">Impresa / Azienda</span>
-                </button>
-                <button onclick="selectSoggetto('pa')" class="group p-6 border-2 border-gray-100 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all text-center">
-                    <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">🏛️</div>
-                    <span class="block font-bold text-blue-700">Pubblica Amministrazione</span>
-                </button>
-            </div>
-        `;
-    }
-
-    // 2. Logica di Selezione Soggetto
-    function selectSoggetto(tipo) {
-        nav.classList.remove('hidden');
-        if (tipo === 'privato') {
-            renderInterventi('privato');
-        } else if (tipo === 'impresa') {
-            renderSottotipologia('impresa', [
-                "ETS economico", "Piccola impresa", "Media impresa", "Grande impresa"
-            ]);
-        } else if (tipo === 'pa') {
-            renderSottotipologia('pa', [
-                "PA Standard sotto i 15.000 abitanti", 
-                "PA Standard sopra i 15.000 abitanti", 
-                "Istituti Penitenziari", 
-                "Scuole", 
-                "Strutture Sanitarie", 
-                "ETS non economico sotto i 15.000 abitanti", 
-                "ETS non economico sopra i 15.000 abitanti"
-            ]);
+        function renderHome() {
+            nav.classList.add('hidden');
+            app.innerHTML = `
+                <h2 class="text-2xl font-bold text-gray-800 mb-8 text-center">Scegli il Soggetto Responsabile</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <button onclick="selectSoggetto('privato')" class="p-8 border-2 border-gray-100 rounded-2xl hover:border-blue-500 hover:bg-blue-50 transition-all text-center shadow-sm">
+                        <div class="text-4xl mb-3">🏠</div><span class="block font-bold text-blue-800 text-lg">Privato</span>
+                    </button>
+                    <button onclick="selectSoggetto('impresa')" class="p-8 border-2 border-gray-100 rounded-2xl hover:border-blue-500 hover:bg-blue-50 transition-all text-center shadow-sm">
+                        <div class="text-4xl mb-3">🏢</div><span class="block font-bold text-blue-800 text-lg">Impresa</span>
+                    </button>
+                    <button onclick="selectSoggetto('pa')" class="p-8 border-2 border-gray-100 rounded-2xl hover:border-blue-500 hover:bg-blue-50 transition-all text-center shadow-sm">
+                        <div class="text-4xl mb-3">🏛️</div><span class="block font-bold text-blue-800 text-lg">PA</span>
+                    </button>
+                </div>`;
         }
-    }
 
-    // 3. Rendering Sottotipologie (Impresa e PA)
-    function renderSottotipologia(categoria, opzioni) {
-        let html = `<h2 class="text-xl font-bold mb-6 text-gray-800">Seleziona la tipologia di ${categoria === 'pa' ? 'Ente' : 'Impresa'}</h2>
-                    <div class="grid gap-3">`;
-        opzioni.forEach(opt => {
-            html += `
-                <button onclick="renderInterventi('${categoria}', '${opt}')" 
-                    class="p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-white hover:border-blue-500 hover:shadow-md text-left transition-all flex justify-between items-center group">
-                    <span class="font-semibold text-gray-700 group-hover:text-blue-700">${opt}</span>
-                    <span class="text-blue-400">&rarr;</span>
-                </button>`;
-        });
-        html += `</div>`;
-        app.innerHTML = html;
-    }
+        function selectSoggetto(tipo) {
+            nav.classList.remove('hidden');
+            if (tipo === 'pa') {
+                // ELENCO IDENTICO ALLA TUA FOTO 1
+                renderSottotipologia('pa', [
+                    "PA Standard sotto i 15.000 abitanti",
+                    "PA Standard sopra i 15.000 abitanti",
+                    "Istituti Penitenziari",
+                    "Scuole",
+                    "Strutture Sanitarie",
+                    "ETS non economico sotto i 15.000 abitanti",
+                    "ETS non economico sopra i 15.000 abitanti"
+                ]);
+            } else if (tipo === 'impresa') {
+                renderSottotipologia('impresa', ["ETS economico", "Piccola impresa", "Media impresa", "Grande impresa"]);
+            } else {
+                renderInterventi('privato');
+            }
+        }
 
-    // 4. Visualizzazione Interventi (Logica finale)
-    function renderInterventi(tipo, sottotipologia = '') {
-        const headerLabel = sottotipologia || "Privato";
-        let html = `
-            <div class="flex items-center justify-between mb-6 border-b pb-4">
-                <h2 class="text-xl font-bold text-blue-800 uppercase tracking-tight">Interventi Disponibili</h2>
-                <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold">${headerLabel}</span>
-            </div>
-        `;
-
-        if (tipo === 'privato') {
-            html += `<p class="text-sm text-gray-500 mb-4 font-medium italic underline decoration-blue-200">Titolo III - Fonti Rinnovabili</p>
-                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">`;
-            INTERVENTI.titolo3.forEach(opt => {
-                html += `<button onclick="openCalculator('${opt.id}', '${tipo}', '${sottotipologia}')" class="p-4 border border-gray-200 rounded-xl text-left hover:border-blue-500 hover:bg-blue-50 transition-all font-medium text-gray-700">${opt.label}</button>`;
+        function renderSottotipologia(categoria, opzioni) {
+            let html = `<h2 class="text-2xl font-bold mb-8 text-blue-900">Seleziona la tipologia di Ente</h2><div class="space-y-3">`;
+            opzioni.forEach(opt => {
+                html += `
+                    <button onclick="renderInterventi('${categoria}', '${opt}')" class="w-full p-5 bg-white border border-gray-200 rounded-xl hover:border-blue-400 hover:bg-blue-50 flex justify-between items-center group transition-all shadow-sm">
+                        <span class="font-semibold text-gray-700 group-hover:text-blue-800">${opt}</span>
+                        <span class="text-blue-300 group-hover:text-blue-600">→</span>
+                    </button>`;
             });
-            html += `</div>`;
-        } else {
-            // Layout per Imprese e PA (Titolo II + Titolo III)
+            app.innerHTML = html + `</div>`;
+        }
+
+        function renderInterventi(tipo, sottotipologia = '') {
+            // HEADER IDENTICO ALLA TUA FOTO 2
+            let html = `
+                <div class="flex items-center justify-between mb-8 border-b border-gray-100 pb-5">
+                    <h2 class="text-2xl font-bold text-blue-900 uppercase">Interventi Disponibili</h2>
+                    <span class="bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-xs font-black shadow-sm uppercase italic">
+                        ${sottotipologia || tipo}
+                    </span>
+                </div>`;
+
+            // SEZIONE TITOLO II - IDENTICA ALLA FOTO 2
+            if (tipo !== 'privato') {
+                html += `
+                    <div class="mb-10">
+                        <h3 class="text-xs font-black uppercase text-gray-400 mb-5 tracking-[0.2em]">Titolo II - Efficienza</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            ${INTERVENTI_DB.titolo2.map(int => `
+                                <button onclick="openCalculator('${int.id}', '${tipo}', '${sottotipologia}')" 
+                                        class="p-4 border border-gray-200 rounded-xl text-left font-bold text-gray-700 hover:border-blue-500 hover:bg-blue-50 transition-all shadow-sm">
+                                    ${int.label}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>`;
+            }
+
+            // SEZIONE TITOLO III - IDENTICA ALLA FOTO 2
             html += `
-                <div class="space-y-8">
-                    <section>
-                        <h3 class="text-xs font-black uppercase tracking-widest text-gray-400 mb-4 flex items-center">
-                            <span class="mr-3">Titolo II - Efficienza</span>
-                            <hr class="flex-grow border-gray-100">
-                        </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            ${INTERVENTI.titolo2.map(opt => `
-                                <button onclick="openCalculator('${opt.id}', '${tipo}', '${sottotipologia}')" class="p-3 border border-gray-100 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50 transition-all text-sm font-bold text-gray-600">
-                                    ${opt.label}
-                                </button>
-                            `).join('')}
-                        </div>
-                    </section>
-                    <section>
-                        <h3 class="text-xs font-black uppercase tracking-widest text-gray-400 mb-4 flex items-center">
-                            <span class="mr-3">Titolo III - Rinnovabili</span>
-                            <hr class="flex-grow border-gray-100">
-                        </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            ${INTERVENTI.titolo3.map(opt => `
-                                <button onclick="openCalculator('${opt.id}', '${tipo}', '${sottotipologia}')" class="p-3 border border-gray-100 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50 transition-all text-sm font-bold text-gray-600">
-                                    ${opt.label}
-                                </button>
-                            `).join('')}
-                        </div>
-                    </section>
-                </div>
-            `;
+                <div>
+                    <h3 class="text-xs font-black uppercase text-gray-400 mb-5 tracking-[0.2em]">Titolo III - Rinnovabili</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${INTERVENTI_DB.titolo3.map(int => `
+                            <button onclick="openCalculator('${int.id}', '${tipo}', '${sottotipologia}')" 
+                                    class="p-4 border border-gray-200 rounded-xl text-left font-bold text-gray-700 hover:border-blue-500 hover:bg-blue-50 transition-all shadow-sm">
+                                ${int.label}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>`;
+
+            app.innerHTML = html;
         }
-        app.innerHTML = html;
-    }
 
-    // 5. Placeholder Calcolatrice
- function openCalculator(id, tipo, sottotipologia) {
-    if (id !== 'III.A') {
-        app.innerHTML = `<div class="p-10 text-center text-gray-400 font-bold italic">Modulo ${id} in fase di configurazione.</div>`;
-        return;
-    }
-
-    app.innerHTML = `
-        <div class="space-y-6">
-            <div class="flex items-center justify-between border-b pb-4">
-                <h2 class="text-2xl font-bold text-blue-800">Calcolo III.A - Pompe di Calore</h2>
-                <span class="text-xs font-black bg-blue-100 text-blue-700 px-3 py-1 rounded-full uppercase">${sottotipologia || tipo}</span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="space-y-4 bg-gray-50 p-6 rounded-xl border border-gray-200 shadow-sm">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700">Spesa Stimata (€)</label>
-                        <input type="number" id="spesa" step="0.01" class="w-full mt-1 p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none" placeholder="0.00">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700">Potenza Nominale Pm (kW)</label>
-                        <input type="number" id="potenza" step="0.1" class="w-full mt-1 p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Es: 15.5">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700">Zona Climatica</label>
-                        <select id="zona" class="w-full mt-1 p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none">
-                            <option value="600">Zona A (600 ore)</option>
-                            <option value="850">Zona B (850 ore)</option>
-                            <option value="1100">Zona C (1.100 ore)</option>
-                            <option value="1400">Zona D (1.400 ore)</option>
-                            <option value="1700">Zona E (1.700 ore)</option>
-                            <option value="1800">Zona F (1.800 ore)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700">SCOP (Efficienza della macchina)</label>
-                        <input type="number" id="scop" step="0.01" class="w-full mt-1 p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Es: 4.2">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700">Tipologia Pompa di Calore</label>
-                        <select id="tipoPdc" class="w-full mt-1 p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none">
-                            <option value="0.150|2.825">Aria/acqua ≤ 35 kWt</option>
-                            <option value="0.060|2.825">Aria/Acqua > 35 kWt</option>
-                            <option value="0.070|3.800">Aria/Aria: Split / Multisplit ≤ 12 kWt</option>
-                            <option value="0.150|3.500">Aria/Aria: VRF / VRV ≤ 35 kWt</option>
-                            <option value="0.055|3.500">Aria/Aria: VRF / VRV > 35 kWt</option>
-                            <option value="0.150|3.200">Aria/Aria: Rooftop ≤ 35 kWt</option>
-                            <option value="0.055|3.200">Aria/Aria: Rooftop > 35 kWt</option>
-                        </select>
-                    </div>
-                    <button onclick="calcolaIncentivoPDC('${tipo}', '${sottotipologia}')" class="w-full bg-blue-700 text-white font-black py-4 rounded-lg hover:bg-blue-800 transition-all shadow-lg uppercase">Calcola Incentivo</button>
-                </div>
-
-                <div id="risultato-box" class="hidden space-y-4">
-                    <div class="p-8 bg-white border-2 border-blue-600 rounded-2xl shadow-lg">
-                        <div class="mb-4">
-                            <p class="text-xs text-gray-400 font-bold uppercase mb-1">Incentivo Calcolato (Lordo)</p>
-                            <p id="res-incentivo-calcolato" class="text-xl font-bold text-gray-500">€ 0,00</p>
-                        </div>
-                        
-                        <div class="pt-4 border-t-2 border-dashed border-gray-100">
-                            <p class="text-sm text-blue-800 font-black uppercase mb-1">Incentivo Erogabile</p>
-                            <p id="res-erogabile" class="text-4xl font-black text-green-600">€ 0,00</p>
-                            <div id="info-rate" class="mt-4 p-3 bg-green-50 rounded text-xs text-green-700 font-medium"></div>
-                        </div>
-                    </div>
-
-                    <div id="alert-cap-65" class="hidden p-4 bg-orange-50 border-l-4 border-orange-500 text-orange-800 text-sm">
-                        <b>⚠️ Attenzione:</b> l'incentivo copre al massimo il 65% della fattura.
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-function calcolaIncentivoPDC(soggetto, sottotipologia) {
-    const spesa = parseFloat(document.getElementById('spesa').value) || 0;
-    const pm = parseFloat(document.getElementById('potenza').value) || 0;
-    const quf = parseFloat(document.getElementById('zona').value) || 0;
-    const scop = parseFloat(document.getElementById('scop').value) || 0;
-    const [ci, scopMin] = document.getElementById('tipoPdc').value.split('|').map(Number);
-
-    if (spesa <= 0 || pm <= 0 || scop <= 0) {
-        alert("Dati incompleti. Inserire spesa, potenza e SCOP.");
-        return;
-    }
-
-    // 1. Logica Anni e Rate
-    const anni = pm <= 35 ? 2 : 5;
-
-    // 2. Calcolo kp (SCOP / SCOP_minimo)
-    const kp = scop / scopMin;
-
-    // 3. Calcolo Itot = Ci * Pm * Quf * [1 - (1/SCOP)] * kp * anni
-    const incentivoCalcolato = ci * pm * quf * (1 - (1 / scop)) * kp * anni;
-
-    // 4. Gestione Limiti e Soggetti PA Speciali
-    const soggetti100 = [
-        "PA Standard sotto i 15.000 abitanti", 
-        "Scuole", 
-        "Istituti Penitenziari", 
-        "Strutture Sanitarie", 
-        "ETS non economico sotto i 15.000 abitanti"
-    ];
-
-    let incentivoFinale = 0;
-    const alertCap = document.getElementById('alert-cap-65');
-    alertCap.classList.add('hidden');
-
-    if (soggetti100.includes(sottotipologia)) {
-        // Caso PA Speciale: 100% dell'incentivo calcolato
-        incentivoFinale = incentivoCalcolato;
-    } else {
-        // Caso Privati/Imprese: Controllo se incentivo > 65% della spesa
-        const limite65 = spesa * 0.65;
-        if (incentivoCalcolato > limite65) {
-            incentivoFinale = limite65;
-            alertCap.classList.remove('hidden');
-        } else {
-            incentivoFinale = incentivoCalcolato;
+        function openCalculator(id, tipo, sottotipologia) {
+            if (id === 'II.A') renderIIA(tipo, sottotipologia);
+            else if (id === 'III.A') renderIIIA(tipo, sottotipologia);
+            else {
+                app.innerHTML = `
+                    <div class="p-16 text-center space-y-6">
+                        <div class="text-6xl">🛠️</div>
+                        <h3 class="text-xl font-bold text-gray-800 uppercase">Modulo ${id}</h3>
+                        <p class="text-gray-400 italic">Il calcolatore per questo intervento è attualmente in fase di sviluppo.</p>
+                        <button onclick="renderHome()" class="inline-block mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg font-bold shadow-md">Torna alla selezione</button>
+                    </div>`;
+            }
         }
-    }
 
-    // 5. Visualizzazione Risultati
-    const format = (val) => val.toLocaleString('it-IT', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    
-    document.getElementById('res-incentivo-calcolato').innerText = `€ ${format(incentivoCalcolato)}`;
-    document.getElementById('res-erogabile').innerText = `€ ${format(incentivoFinale)}`;
-    
-    // Logica Rateazione
-    const infoRate = document.getElementById('info-rate');
-    if (incentivoFinale <= 15000) {
-        infoRate.innerHTML = `✅ Importo ≤ 15.000€: l'erogazione avviene in un'<b>unica soluzione</b> (rata unica).`;
-    } else {
-        infoRate.innerHTML = `📅 Importo > 15.000€: l'erogazione avviene in <b>${anni} rate</b> annuali costanti da € ${format(incentivoFinale/anni)}.`;
-    }
+        // --- I CALCOLATORI GIÀ OTTIMIZZATI ---
+        function renderIIA(tipo, sottotipologia) {
+            app.innerHTML = `
+                <div class="space-y-6">
+                    <h2 class="text-2xl font-bold text-blue-800 border-b pb-4">Calcolo II.A - Isolamento Termico</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <div class="space-y-4">
+                            <div><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Spesa Stimata (€)</label>
+                                 <input type="number" id="spesaIIA" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 shadow-sm" placeholder="0.00"></div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Superfici (mq)</label>
+                            <div class="grid grid-cols-3 gap-3">
+                                <input type="number" id="mqCop" class="p-3 border rounded-xl shadow-sm" placeholder="Cop.">
+                                <input type="number" id="mqPav" class="p-3 border rounded-xl shadow-sm" placeholder="Pav.">
+                                <input type="number" id="mqPar" class="p-3 border rounded-xl shadow-sm" placeholder="Par.">
+                            </div>
+                            <div><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Zona Climatica</label>
+                                 <select id="zonaIIA" class="w-full p-3 border rounded-xl shadow-sm"><option value="AD">Zona A, B, C, D</option><option value="EF">Zona E, F</option></select></div>
+                            <div><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Abbinato a Impianto?</label>
+                                 <select id="abbinato" class="w-full p-3 border rounded-xl shadow-sm"><option value="no">No</option><option value="si">Si</option></select></div>
+                            <button onclick="calcolaIIA('${tipo}', '${sottotipologia}')" class="w-full bg-blue-700 text-white font-black py-4 rounded-xl shadow-xl hover:bg-blue-800 transition-all uppercase tracking-widest">Calcola</button>
+                        </div>
+                        <div id="resIIA" class="hidden p-8 bg-blue-50 rounded-2xl border-2 border-blue-200 flex flex-col justify-center items-center text-center shadow-inner">
+                            <p class="text-xs font-bold uppercase text-gray-400 mb-2 tracking-widest">Incentivo Erogabile</p>
+                            <p id="valIIA" class="text-5xl font-black text-green-600">€ 0,00</p>
+                            <div id="warnIIA" class="mt-6 text-sm text-orange-700 italic font-bold leading-relaxed bg-orange-50 p-4 rounded-lg"></div>
+                        </div>
+                    </div>
+                </div>`;
+        }
 
-    document.getElementById('risultato-box').classList.remove('hidden');
-    document.getElementById('risultato-box').scrollIntoView({ behavior: 'smooth' });
-}
-    // Inizializzazione
-    renderHome();
-</script>
+        function calcolaIIA(tipo, sottotipologia) {
+            const spesaInserita = parseFloat(document.getElementById('spesaIIA').value) || 0;
+            const mqCop = parseFloat(document.getElementById('mqCop').value) || 0;
+            const mqPav = parseFloat(document.getElementById('mqPav').value) || 0;
+            const mqPar = parseFloat(document.getElementById('mqPar').value) || 0;
+            const zona = document.getElementById('zonaIIA').value;
+            const abbinato = document.getElementById('abbinato').value;
+
+            const spesaMassimaAmmissibile = (mqCop * 300) + (mqPav * 150) + (mqPar * 200);
+            const spesaBaseCalcolo = Math.min(spesaInserita, spesaMassimaAmmissibile);
+
+            let percentuale = 0.40;
+            const soggetti100 = ["PA Standard sotto i 15.000 abitanti", "Scuole", "Strutture Sanitarie", "Istituti Penitenziari", "ETS non economico sotto i 15.000 abitanti"];
+            
+            if (soggetti100.includes(sottotipologia)) {
+                percentuale = 1.0;
+            } else {
+                if (abbinato === "si") percentuale = 0.55;
+                else if (zona === "EF") percentuale = 0.50;
+            }
+
+            const finale = spesaBaseCalcolo * percentuale;
+            let warn = "";
+            if (spesaInserita > spesaMassimaAmmissibile) {
+                warn = `⚠️ La spesa supera i massimali (€${spesaMassimaAmmissibile.toLocaleString()}). L'incentivo è calcolato sul tetto ammesso.`;
+            }
+
+            document.getElementById('resIIA').classList.remove('hidden');
+            document.getElementById('valIIA').innerText = "€ " + finale.toLocaleString('it-IT', {minimumFractionDigits:2});
+            const warnEl = document.getElementById('warnIIA');
+            if (warn) { warnEl.innerHTML = warn; warnEl.classList.remove('hidden'); } else { warnEl.classList.add('hidden'); }
+        }
+
+        function renderIIIA(tipo, sottotipologia) {
+            app.innerHTML = `
+                <div class="space-y-6">
+                    <h2 class="text-2xl font-bold text-blue-800 border-b pb-4">Calcolo III.A - Pompe di Calore</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <div class="space-y-4">
+                            <input type="number" id="spesaIII" class="w-full p-3 border rounded-xl" placeholder="Spesa Stimata (€)">
+                            <input type="number" id="pmIII" class="w-full p-3 border rounded-xl" placeholder="Potenza Nominale (kW)">
+                            <select id="zonaIII" class="w-full p-3 border rounded-xl">
+                                <option value="600">Zona A (600h)</option><option value="850">Zona B (850h)</option>
+                                <option value="1100">Zona C (1100h)</option><option value="1400">Zona D (1400h)</option>
+                                <option value="1700">Zona E (1700h)</option><option value="1800">Zona F (1800h)</option>
+                            </select>
+                            <input type="number" id="scopIII" class="w-full p-3 border rounded-xl" placeholder="SCOP">
+                            <select id="tipoPdc" class="w-full p-3 border rounded-xl text-xs">
+                                <option value="0.150|2.825">Aria/Acqua ≤ 35kW</option><option value="0.070|3.800">Split ≤ 12kW</option>
+                            </select>
+                            <button onclick="calcolaIIIA('${sottotipologia}')" class="w-full bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg uppercase">Calcola</button>
+                        </div>
+                        <div id="resIII" class="hidden p-8 bg-blue-50 rounded-2xl border-2 border-blue-200 flex flex-col justify-center items-center shadow-inner">
+                            <p class="text-xs font-bold uppercase text-gray-400 mb-2">Incentivo Stimato</p>
+                            <p id="valIII" class="text-4xl font-black text-green-600">€ 0,00</p>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        function calcolaIIIA(sottotipologia) {
+            const spesa = parseFloat(document.getElementById('spesaIII').value) || 0;
+            const pm = parseFloat(document.getElementById('pmIII').value) || 0;
+            const quf = parseFloat(document.getElementById('zonaIII').value) || 0;
+            const scop = parseFloat(document.getElementById('scopIII').value) || 0;
+            const [ci, scopMin] = document.getElementById('tipoPdc').value.split('|').map(Number);
+            const calcolato = ci * pm * quf * (1 - (1/scop)) * (scop/scopMin) * (pm <= 35 ? 2 : 5);
+            const soggetti100 = ["Scuole", "Istituti Penitenziari", "Strutture Sanitarie", "PA Standard sotto i 15.000 abitanti"];
+            let finale = soggetti100.includes(sottotipologia) ? calcolato : Math.min(calcolato, spesa * 0.65);
+            document.getElementById('resIII').classList.remove('hidden');
+            document.getElementById('valIII').innerText = "€ " + finale.toLocaleString('it-IT', {minimumFractionDigits:2});
+        }
+
+        renderHome();
+    </script>
+</body>
+</html>
