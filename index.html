@@ -247,7 +247,7 @@
             const [ci, scopMin] = document.getElementById('tipoPdc').value.split('|').map(Number);
 
             const anni = pm <= 35 ? 2 : 5;
-            const lordo = ci * pm * quf * (1 - (1/scop)) * (scop/scopMin) * anni;
+            const lordo = ci * pm * quf * (1 - (1/scop)) * (scop/scop) * anni;
             const soggetti100 = ["Scuole", "Istituti Penitenziari", "Strutture Sanitarie", "PA Standard sotto i 15.000 abitanti"];
             let erogabile = soggetti100.includes(sottotipologia) ? lordo : Math.min(lordo, spesa * 0.65);
 
@@ -271,3 +271,4 @@
     </style>
 </body>
 </html>
+
