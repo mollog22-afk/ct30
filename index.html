@@ -2,156 +2,256 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Planimetria SOS e Antincendio Esterno - Galleria Sassoferrato</title>
+    <title>Schema Impianti Galleria Sassoferrato - Formato A1</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: #444; margin: 0; padding: 20px; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #555; margin: 0; padding: 40px; }
         
-        .a1-page { 
-            width: 2380px; 
-            height: 1200px; 
-            background: white; 
+        /* Contenitore A1 */
+        .a1-canvas { 
+            width: 2380px; /* Circa 841mm a 72dpi, scalato per visibilità */
+            min-height: 1680px; 
+            background: #fff; 
             margin: auto; 
-            padding: 50px; 
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            padding: 60px; 
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
             position: relative;
             box-sizing: border-box;
+            border: 5px solid #000;
         }
 
-        h1 { text-align: center; font-size: 42px; color: #1a3a5a; margin-bottom: 0; }
-        h2 { text-align: center; font-size: 22px; color: #666; margin-top: 5px; margin-bottom: 60px; }
+        h1 { text-align: center; font-size: 56px; margin-bottom: 5px; color: #1a3a5a; }
+        h2 { text-align: center; font-size: 28px; color: #555; margin-bottom: 60px; }
 
-        /* Rappresentazione Galleria e Piazzali */
-        .main-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 150px;
-        }
-
-        .piazzale {
-            width: 250px;
-            height: 450px;
-            background: #bbb;
+        /* Linea Media Tensione 20kV */
+        .mt-ring-container {
+            width: 100%;
+            height: 120px;
             position: relative;
-            border: 2px dashed #666;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
+            margin-bottom: 40px;
         }
-
-        .tunnel-body {
-            width: 1700px;
-            height: 400px;
-            background: #333;
-            position: relative;
-            border-top: 10px solid #555;
-            border-bottom: 10px solid #555;
-        }
-
-        /* Idranti UNI 70 Esterni */
-        .idrante-uni70 {
-            width: 50px;
-            height: 50px;
-            background: #c0392b;
-            border: 4px solid #fff;
-            border-radius: 5px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 12px;
-            box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
-        }
-        .idrante-label { color: #c0392b; font-weight: bold; font-size: 16px; margin-top: 5px; }
-
-        /* Elementi Galleria */
-        .road-line {
+        .mt-line {
             position: absolute;
-            top: 50%; width: 100%; height: 2px;
-            border-top: 6px dashed #fff;
-            transform: translateY(-50%);
+            top: 60px;
+            left: 5%;
+            width: 90%;
+            height: 10px;
+            background: #c0392b;
+            border-radius: 5px;
+            z-index: 1;
+        }
+        .mt-label {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            top: 15px;
+            font-size: 26px;
+            font-weight: bold;
+            color: #c0392b;
         }
 
-        /* SOS e Naspi Interni */
-        .sos-station { position: absolute; width: 40px; text-align: center; }
-        .sos-icon { width: 30px; height: 30px; background: #e67e22; color: white; font-size: 10px; font-weight: bold; line-height: 30px; border-radius: 3px; border: 1px solid #fff; margin: auto;}
-        .naspo-dot { width: 10px; height: 100%; background: #c0392b; border-radius: 50%; margin: 5px auto; border: 1px solid #fff; }
+        /* Layout Colonne */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 500px 1fr 500px;
+            gap: 60px;
+            align-items: start;
+        }
 
-        /* Posizionamento SOS (Esempio ridotto per visualizzazione) */
-        .top-side { top: -80px; }
-        .bottom-side { bottom: -80px; }
+        /* Stile Cabine */
+        .substation {
+            border: 5px solid #2c3e50;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        .substation h3 { font-size: 32px; border-bottom: 3px solid #2c3e50; padding-bottom: 10px; }
 
-        /* Legend e Cartiglio */
-        .footer-row {
+        /* Sezione Galleria */
+        .tunnel-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        /* Blocchi Componenti */
+        .box {
+            border: 2px solid #333;
+            padding: 20px;
+            margin-bottom: 25px;
+            background: white;
+            font-size: 20px;
+            line-height: 1.4;
+        }
+        .box-title { font-weight: bold; display: block; margin-bottom: 10px; font-size: 22px; color: #2980b9; }
+        
+        .sub-box {
+            background: #fff3cd; /* Colore Cavedio */
+            border-left: 10px solid #f1c40f;
+            padding: 15px;
+            margin-top: 10px;
+        }
+        
+        .piazzola-card {
+            border: 3px solid #e67e22;
+            padding: 20px;
+            border-radius: 10px;
+            background: #fffaf5;
+        }
+        .ups-local {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 18px;
+            border: 1px dashed #27ae60;
+            padding: 5px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* Legenda e Cartiglio */
+        .footer-area {
+            margin-top: 80px;
             display: flex;
             justify-content: space-between;
-            margin-top: 100px;
-            padding: 30px;
-            border-top: 3px solid #000;
+            border-top: 4px solid #000;
+            padding-top: 40px;
         }
-        .legend { border: 2px solid #000; padding: 20px; background: #f9f9f9; width: 800px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .legend-item { display: flex; align-items: center; font-size: 18px; }
-        .color-box { width: 30px; height: 30px; margin-right: 15px; border: 1px solid #000; }
-        
-        .cartiglio { border: 2px solid #000; width: 600px; padding: 20px; font-size: 20px; background: #eee; }
+        .cartiglio {
+            border: 2px solid #000;
+            width: 500px;
+            padding: 20px;
+            font-size: 22px;
+        }
     </style>
 </head>
 <body>
 
-<div class="a1-page">
-    <h1>PLANIMETRIA GENERALE SICUREZZA E ANTINCENDIO (UNI 45 / UNI 70)</h1>
-    <h2>Galleria Sassoferrato (1.864 m) - Configurazione Imbocchi e Interno</h2>
+<div class="a1-canvas">
+    <h1>SCHEMA FUNZIONALE IMPIANTI ELETTRICI DI GALLERIA</h1>
+    <h2>Interconnessione MT - Doppia Alimentazione DX/SX - 6 Piazzole di Sosta</h2>
 
-    <div class="main-container">
-        <div class="piazzale">
-            <div style="font-weight: bold; font-size: 20px;">PIAZZALE NORD</div>
-            <div class="idrante-uni70">UNI 70</div>
-            <div class="idrante-uni70">UNI 70</div>
-            <div class="idrante-label">Idranti Soprassuolo</div>
+    <div class="mt-ring-container">
+        <div class="mt-label">ANELLO DI INTERCONNESSIONE MEDIA TENSIONE 20kV (Soccorso Mutuo Totale)</div>
+        <div class="mt-line"></div>
+    </div>
+
+    <div class="main-layout">
+        <div class="substation">
+            <h3>CABINA NORD</h3>
+            <div class="box">
+                <span class="box-title">Scomparti MT</span>
+                Arrivo Rete + Linea Anello MT 20kV
+            </div>
+            <div class="box">
+                <span class="box-title">Trasformazione</span>
+                Trasformatore 1.250 kVA (Resina)
+            </div>
+            <div class="box" style="border-color: #27ae60;">
+                <span class="box-title">Emergenza Centralizzata</span>
+                Gruppo Elettrogeno 1.000 kVA<br>
+                UPS di Cabina 160 kVA (VFI)
+            </div>
+            <div class="box" style="background: #d4edda;">
+                <span class="box-title">Calotta (Alta)</span>
+                Alimentazione Illuminazione Nord
+            </div>
         </div>
 
-        <div class="tunnel-body">
-            <div class="road-line"></div>
+        <div class="tunnel-section">
+            <div class="tunnel-grid">
+                <div>
+                    <h4 style="font-size: 26px; color: #d35400;">Dorsale A (Cavedio DX)</h4>
+                    
+                    <div class="piazzola-card">
+                        <span class="box-title">PIAZZOLA 1 (KM 0+300)</span>
+                        - Quadro Bypass Jet Fan 45kW<br>
+                        - Quadro Bypass Pressurizzazione 18.5kW<br>
+                        <div class="ups-local">UPS Locale per Logica e Inverter</div>
+                    </div>
+                    <br>
+                    <div class="piazzola-card">
+                        <span class="box-title">PIAZZOLA 3 (KM 0+900)</span>
+                        - Quadro Bypass Jet Fan 45kW<br>
+                        - Quadro Bypass Pressurizzazione 18.5kW<br>
+                        <div class="ups-local">UPS Locale per Logica e Inverter</div>
+                    </div>
+                    <br>
+                    <div class="piazzola-card">
+                        <span class="box-title">PIAZZOLA 5 (KM 1+500)</span>
+                        - Quadro Bypass Jet Fan 45kW<br>
+                        - Quadro Bypass Pressurizzazione 18.5kW<br>
+                        <div class="ups-local">UPS Locale per Logica e Inverter</div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 style="font-size: 26px; color: #c0392b;">Dorsale B (Cavedio SX)</h4>
+                    
+                    <div class="piazzola-card">
+                        <span class="box-title">PIAZZOLA 2 (KM 0+600)</span>
+                        - Quadro Bypass Jet Fan 45kW<br>
+                        - Quadro Bypass Pressurizzazione 18.5kW<br>
+                        <div class="ups-local">UPS Locale per Logica e Inverter</div>
+                    </div>
+                    <br>
+                    <div class="piazzola-card">
+                        <span class="box-title">PIAZZOLA 4 (KM 1+200)</span>
+                        - Quadro Bypass Jet Fan 45kW<br>
+                        - Quadro Bypass Pressurizzazione 18.5kW<br>
+                        <div class="ups-local">UPS Locale per Logica e Inverter</div>
+                    </div>
+                    <br>
+                    <div class="piazzola-card">
+                        <span class="box-title">PIAZZOLA 6 (KM 1+800)</span>
+                        - Quadro Bypass Jet Fan 45kW<br>
+                        - Quadro Bypass Pressurizzazione 18.5kW<br>
+                        <div class="ups-local">UPS Locale per Logica e Inverter</div>
+                    </div>
+                </div>
+            </div>
             
-            <div class="sos-station top-side" style="left: 100px;"><div class="sos-icon">SOS</div><div class="naspo-dot" style="height: 10px;"></div></div>
-            <div class="sos-station top-side" style="left: 400px;"><div class="sos-icon">SOS</div><div class="naspo-dot" style="height: 10px;"></div></div>
-            <div class="sos-station top-side" style="left: 700px;"><div class="sos-icon">SOS</div><div class="naspo-dot" style="height: 10px;"></div></div>
-            <div class="sos-station top-side" style="left: 1000px;"><div class="sos-icon">SOS</div><div class="naspo-dot" style="height: 10px;"></div></div>
-            <div class="sos-station top-side" style="left: 1300px;"><div class="sos-icon">SOS</div><div class="naspo-dot" style="height: 10px;"></div></div>
-            <div class="sos-station top-side" style="left: 1600px;"><div class="sos-icon">SOS</div><div class="naspo-dot" style="height: 10px;"></div></div>
-
-            <div class="sos-station bottom-side" style="left: 250px;"><div class="sos-icon">SOS</div><div class="naspo-dot" style="height: 10px;"></div></div>
-            <div class="sos-station bottom-side" style="left: 550px;"><div class="sos-icon">SOS</div><div class="naspo-dot" style="height: 10px;"></div></div>
-            <div class="sos-station bottom-side" style="left: 850px;"><div class="sos-icon">SOS</div><div class="naspo-dot" style="height: 10px;"></div></div>
-            <div class="sos-station bottom-side" style="left: 1150px;"><div class="sos-icon">SOS</div><div class="naspo-dot" style="height: 10px;"></div></div>
-            <div class="sos-station bottom-side" style="left: 1450px;"><div class="sos-icon">SOS</div><div class="naspo-dot" style="height: 10px;"></div></div>
+            <div class="sub-box" style="margin-top: 40px; text-align: center;">
+                <strong>INFRASTRUTTURA CAVEDIO (Retro New Jersey):</strong><br>
+                Dorsali Potenza Ventilazione - Dorsale MT - Alimentazione SOS - Cavi Alluminio PMV - Fibra Ottica
+            </div>
         </div>
 
-        <div class="piazzale">
-            <div style="font-weight: bold; font-size: 20px;">PIAZZALE SUD</div>
-            <div class="idrante-uni70">UNI 70</div>
-            <div class="idrante-uni70">UNI 70</div>
-            <div class="idrante-label">Idranti Soprassuolo</div>
-            <div style="margin-top: 10px; font-size: 14px; color: #c0392b; font-weight: bold;">CENTRALE IDRICA</div>
+        <div class="substation">
+            <h3>CABINA SUD</h3>
+            <div class="box">
+                <span class="box-title">Scomparti MT</span>
+                Arrivo Rete + Linea Anello MT 20kV
+            </div>
+            <div class="box">
+                <span class="box-title">Trasformazione</span>
+                Trasformatore 1.250 kVA (Resina)
+            </div>
+            <div class="box">
+                <span class="box-title">Servizi Idrici</span>
+                Centrale Pompe Antincendio 55kW
+            </div>
+            <div class="box" style="border-color: #27ae60;">
+                <span class="box-title">Emergenza Centralizzata</span>
+                UPS di Cabina 160 kVA (VFI)
+            </div>
+            <div class="box" style="background: #d4edda;">
+                <span class="box-title">Calotta (Alta)</span>
+                Alimentazione Illuminazione Sud
+            </div>
         </div>
     </div>
 
-    <div class="footer-row">
-        <div class="legend">
-            <div class="legend-item"><div class="color-box" style="background: #c0392b; border: 3px solid #fff;"></div> Idrante Soprassuolo UNI 70 (Esterno)</div>
-            <div class="legend-item"><div class="color-box" style="background: #e67e22;"></div> Colonnina SOS / Citofonia Interna</div>
-            <div class="legend-item"><div class="color-box" style="background: #c0392b; border-radius: 50%; width: 15px; height: 15px;"></div> Naspo UNI 45 (Interno)</div>
-            <div class="legend-item"><div class="color-box" style="background: #bbb;"></div> Area Piazzale Tecnico Esterno</div>
+    <div class="footer-area">
+        <div style="font-size: 22px; width: 800px;">
+            <strong>NOTE DI PROGETTO:</strong><br>
+            1. I quadri di bypass in piazzola includono kit di ventilazione IP65 e mini-UPS per la continuità del PLC.<br>
+            2. Cavi di potenza nel cavedio posati su passerelle a scaletta Inox AISI 304.<br>
+            3. I PMV esterni sono alimentati con cavi in Alluminio ARG7R per limitare cadute di tensione e furti.
         </div>
-
         <div class="cartiglio">
-            <strong>VARIANTE PEDEMONTANA DELLE MARCHE</strong><br>
+            <strong>PROGETTO:</strong> Pedemontana delle Marche<br>
             <strong>OPERA:</strong> Galleria Sassoferrato (1.864 m)<br>
-            <strong>DISEGNO:</strong> Layout Antincendio Integrato (Interno/Esterno)<br>
-            <strong>SCALA:</strong> Ottimizzato per Stampa A1
+            <strong>SCALA:</strong> Ottimizzato per A1<br>
+            <strong>DATA:</strong> Marzo 2024
         </div>
     </div>
 </div>
