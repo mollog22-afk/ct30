@@ -2,144 +2,256 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Schema Unifilare Funzionale - Galleria Sassoferrato (Formato A1)</title>
+    <title>Schema Impianti Galleria Sassoferrato - Formato A1</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #f0f0f0; margin: 0; padding: 20px; }
-        .a1-page { 
-            width: 2100px; /* Scalato per alta risoluzione A1 */
-            height: 1400px; 
-            background: white; 
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #555; margin: 0; padding: 40px; }
+        
+        /* Contenitore A1 */
+        .a1-canvas { 
+            width: 2380px; /* Circa 841mm a 72dpi, scalato per visibilità */
+            min-height: 1680px; 
+            background: #fff; 
             margin: auto; 
-            padding: 40px; 
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            padding: 60px; 
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
             position: relative;
-            border: 2px solid #000;
+            box-sizing: border-box;
+            border: 5px solid #000;
         }
-        h1 { text-align: center; font-size: 48px; color: #1a3a5a; text-transform: uppercase; margin-bottom: 10px; }
-        h2 { text-align: center; font-size: 24px; color: #666; margin-top: 0; }
-        
-        /* Layout Principale */
-        .grid-container { display: flex; justify-content: space-between; margin-top: 50px; height: 80%; }
-        .substation { width: 450px; border: 4px solid #2c3e50; padding: 20px; background: #ecf0f1; border-radius: 10px; }
-        .tunnel-section { flex-grow: 1; margin: 0 40px; border: 2px dashed #999; padding: 20px; position: relative; background: #fafafa; }
 
-        /* Blocchi Componenti */
-        .block { border: 2px solid #333; padding: 10px; margin: 10px 0; background: #fff; text-align: center; font-weight: bold; font-size: 18px; }
-        .mt-bus { border-color: #c0392b; color: #c0392b; border-width: 4px; }
-        .bt-bus { border-color: #2980b9; color: #2980b9; }
-        .piazza-box { border: 2px solid #e67e22; background: #fff9f2; margin-bottom: 30px; padding: 10px; border-radius: 5px; }
-        
-        /* Linee e Connessioni */
-        .interconn-mt { 
-            position: absolute; top: 100px; left: -40px; width: calc(100% + 80px); 
-            height: 8px; background: repeating-linear-gradient(90deg, #c0392b, #c0392b 20px, #fff 20px, #fff 40px);
+        h1 { text-align: center; font-size: 56px; margin-bottom: 5px; color: #1a3a5a; }
+        h2 { text-align: center; font-size: 28px; color: #555; margin-bottom: 60px; }
+
+        /* Linea Media Tensione 20kV */
+        .mt-ring-container {
+            width: 100%;
+            height: 120px;
+            position: relative;
+            margin-bottom: 40px;
+        }
+        .mt-line {
+            position: absolute;
+            top: 60px;
+            left: 5%;
+            width: 90%;
+            height: 10px;
+            background: #c0392b;
+            border-radius: 5px;
             z-index: 1;
         }
-        .interconn-label { position: absolute; top: 70px; left: 50%; transform: translateX(-50%); font-weight: bold; color: #c0392b; font-size: 22px; }
+        .mt-label {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            top: 15px;
+            font-size: 26px;
+            font-weight: bold;
+            color: #c0392b;
+        }
 
-        /* Percorsi Cavi */
-        .route-label { font-size: 16px; font-weight: bold; padding: 5px; border-radius: 3px; margin-bottom: 5px; display: inline-block; }
-        .calotta { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .cavedio { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        /* Layout Colonne */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 500px 1fr 500px;
+            gap: 60px;
+            align-items: start;
+        }
 
-        .flex-piazze { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 150px; }
+        /* Stile Cabine */
+        .substation {
+            border: 5px solid #2c3e50;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        .substation h3 { font-size: 32px; border-bottom: 3px solid #2c3e50; padding-bottom: 10px; }
+
+        /* Sezione Galleria */
+        .tunnel-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        /* Blocchi Componenti */
+        .box {
+            border: 2px solid #333;
+            padding: 20px;
+            margin-bottom: 25px;
+            background: white;
+            font-size: 20px;
+            line-height: 1.4;
+        }
+        .box-title { font-weight: bold; display: block; margin-bottom: 10px; font-size: 22px; color: #2980b9; }
         
-        .footer { position: absolute; bottom: 40px; left: 40px; width: calc(100% - 80px); display: flex; justify-content: space-between; font-size: 18px; border-top: 2px solid #000; padding-top: 20px; }
-        .cartiglio { border: 1px solid #000; padding: 10px; width: 400px; }
+        .sub-box {
+            background: #fff3cd; /* Colore Cavedio */
+            border-left: 10px solid #f1c40f;
+            padding: 15px;
+            margin-top: 10px;
+        }
+        
+        .piazzola-card {
+            border: 3px solid #e67e22;
+            padding: 20px;
+            border-radius: 10px;
+            background: #fffaf5;
+        }
+        .ups-local {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 18px;
+            border: 1px dashed #27ae60;
+            padding: 5px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* Legenda e Cartiglio */
+        .footer-area {
+            margin-top: 80px;
+            display: flex;
+            justify-content: space-between;
+            border-top: 4px solid #000;
+            padding-top: 40px;
+        }
+        .cartiglio {
+            border: 2px solid #000;
+            width: 500px;
+            padding: 20px;
+            font-size: 22px;
+        }
     </style>
 </head>
 <body>
 
-<div class="a1-page">
-    <h1>Schema Impianti Elettrici e Distribuzione Potenza</h1>
-    <h2>Galleria Sassoferrato (L = 1.864 m) - Lotto Fabriano-Sassoferrato</h2>
+<div class="a1-canvas">
+    <h1>SCHEMA FUNZIONALE IMPIANTI ELETTRICI DI GALLERIA</h1>
+    <h2>Interconnessione MT - Doppia Alimentazione DX/SX - 6 Piazzole di Sosta</h2>
 
-    <div class="interconn-label">INTERCONNESSIONE MEDIA TENSIONE (ANELLO 20kV) - POSA IN CAVEDIO</div>
-    <div class="interconn-mt"></div>
+    <div class="mt-ring-container">
+        <div class="mt-label">ANELLO DI INTERCONNESSIONE MEDIA TENSIONE 20kV (Soccorso Mutuo Totale)</div>
+        <div class="mt-line"></div>
+    </div>
 
-    <div class="grid-container">
+    <div class="main-layout">
         <div class="substation">
-            <div class="block mt-bus">CABINA NORD (Sassoferrato)<br>Punto Consegna Enel 20kV</div>
-            <div class="block">TRASFORMATORE 1.250 kVA<br>20kV / 400V</div>
-            <div class="block">QUADRO POWER CENTER NORD<br>Intersblocco MT e Soccorso</div>
-            <div class="block" style="background: #eee;">GRUPPO ELETTROGENO<br>1.000 kVA</div>
-            <div class="block bt-bus">UPS CENTRALIZZATO<br>160 kVA</div>
-            <hr>
-            <div class="route-label calotta">DISTRIBUZIONE ALTA (CALOTTA)</div>
-            <div class="block">Illuminazione Rinforzo Nord</div>
-            <div class="block">Illuminazione Permanente (50%)</div>
+            <h3>CABINA NORD</h3>
+            <div class="box">
+                <span class="box-title">Scomparti MT</span>
+                Arrivo Rete + Linea Anello MT 20kV
+            </div>
+            <div class="box">
+                <span class="box-title">Trasformazione</span>
+                Trasformatore 1.250 kVA (Resina)
+            </div>
+            <div class="box" style="border-color: #27ae60;">
+                <span class="box-title">Emergenza Centralizzata</span>
+                Gruppo Elettrogeno 1.000 kVA<br>
+                UPS di Cabina 160 kVA (VFI)
+            </div>
+            <div class="box" style="background: #d4edda;">
+                <span class="box-title">Calotta (Alta)</span>
+                Alimentazione Illuminazione Nord
+            </div>
         </div>
 
         <div class="tunnel-section">
-            <div class="flex-piazze">
+            <div class="tunnel-grid">
                 <div>
-                    <h3 style="color: #2980b9;">DORSALE DX (Cavedio Tecnico)</h3>
-                    <div class="route-label cavedio">Alimentazione da Cabina Nord</div>
+                    <h4 style="font-size: 26px; color: #d35400;">Dorsale A (Cavedio DX)</h4>
                     
-                    <div class="piazza-box">
-                        <div class="block">PIAZZOLA 1 - KM 0+300</div>
-                        <small>VFD Jet Fan (45kW) + Bypass<br>VFD Pressurizzazione (18.5kW) + Bypass</small>
+                    <div class="piazzola-card">
+                        <span class="box-title">PIAZZOLA 1 (KM 0+300)</span>
+                        - Quadro Bypass Jet Fan 45kW<br>
+                        - Quadro Bypass Pressurizzazione 18.5kW<br>
+                        <div class="ups-local">UPS Locale per Logica e Inverter</div>
                     </div>
-                    <div class="piazza-box">
-                        <div class="block">PIAZZOLA 3 - KM 0+900</div>
-                        <small>VFD Jet Fan (45kW) + Bypass<br>VFD Pressurizzazione (18.5kW) + Bypass</small>
+                    <br>
+                    <div class="piazzola-card">
+                        <span class="box-title">PIAZZOLA 3 (KM 0+900)</span>
+                        - Quadro Bypass Jet Fan 45kW<br>
+                        - Quadro Bypass Pressurizzazione 18.5kW<br>
+                        <div class="ups-local">UPS Locale per Logica e Inverter</div>
                     </div>
-                    <div class="piazza-box">
-                        <div class="block">PIAZZOLA 5 - KM 1+500</div>
-                        <small>VFD Jet Fan (45kW) + Bypass<br>VFD Pressurizzazione (18.5kW) + Bypass</small>
+                    <br>
+                    <div class="piazzola-card">
+                        <span class="box-title">PIAZZOLA 5 (KM 1+500)</span>
+                        - Quadro Bypass Jet Fan 45kW<br>
+                        - Quadro Bypass Pressurizzazione 18.5kW<br>
+                        <div class="ups-local">UPS Locale per Logica e Inverter</div>
                     </div>
                 </div>
 
                 <div>
-                    <h3 style="color: #2980b9;">DORSALE SX (Cavedio Tecnico)</h3>
-                    <div class="route-label cavedio" style="background: #f8d7da;">Alimentazione da Cabina Sud</div>
+                    <h4 style="font-size: 26px; color: #c0392b;">Dorsale B (Cavedio SX)</h4>
                     
-                    <div class="piazza-box">
-                        <div class="block">PIAZZOLA 2 - KM 0+600</div>
-                        <small>VFD Jet Fan (45kW) + Bypass<br>VFD Pressurizzazione (18.5kW) + Bypass</small>
+                    <div class="piazzola-card">
+                        <span class="box-title">PIAZZOLA 2 (KM 0+600)</span>
+                        - Quadro Bypass Jet Fan 45kW<br>
+                        - Quadro Bypass Pressurizzazione 18.5kW<br>
+                        <div class="ups-local">UPS Locale per Logica e Inverter</div>
                     </div>
-                    <div class="piazza-box">
-                        <div class="block">PIAZZOLA 4 - KM 1+200</div>
-                        <small>VFD Jet Fan (45kW) + Bypass<br>VFD Pressurizzazione (18.5kW) + Bypass</small>
+                    <br>
+                    <div class="piazzola-card">
+                        <span class="box-title">PIAZZOLA 4 (KM 1+200)</span>
+                        - Quadro Bypass Jet Fan 45kW<br>
+                        - Quadro Bypass Pressurizzazione 18.5kW<br>
+                        <div class="ups-local">UPS Locale per Logica e Inverter</div>
                     </div>
-                    <div class="piazza-box">
-                        <div class="block">PIAZZOLA 6 - KM 1+800</div>
-                        <small>VFD Jet Fan (45kW) + Bypass<br>VFD Pressurizzazione (18.5kW) + Bypass</small>
+                    <br>
+                    <div class="piazzola-card">
+                        <span class="box-title">PIAZZOLA 6 (KM 1+800)</span>
+                        - Quadro Bypass Jet Fan 45kW<br>
+                        - Quadro Bypass Pressurizzazione 18.5kW<br>
+                        <div class="ups-local">UPS Locale per Logica e Inverter</div>
                     </div>
                 </div>
             </div>
-
-            <div style="margin-top: 50px; text-align: center; border: 1px solid #ccc; padding: 20px;">
-                <div class="route-label calotta">CANALINA ALTA: Sensori Opacità / CO - Anemometri - Segnaletica Calotta</div>
-                <div class="route-label cavedio">CAVEDIO BASSO: Dorsale SOS - Cavi Alluminio PMV - Rete Idrante - Fibra Ottica</div>
+            
+            <div class="sub-box" style="margin-top: 40px; text-align: center;">
+                <strong>INFRASTRUTTURA CAVEDIO (Retro New Jersey):</strong><br>
+                Dorsali Potenza Ventilazione - Dorsale MT - Alimentazione SOS - Cavi Alluminio PMV - Fibra Ottica
             </div>
         </div>
 
         <div class="substation">
-            <div class="block mt-bus">CABINA SUD (Fabriano)<br>Punto Consegna Enel 20kV</div>
-            <div class="block">TRASFORMATORE 1.250 kVA<br>20kV / 400V</div>
-            <div class="block">QUADRO POWER CENTER SUD<br>Intersblocco MT e Soccorso</div>
-            <div class="block" style="background: #34495e; color: white;">CENTRALE ANTINCENDIO<br>Gruppo Pompe 55kW</div>
-            <div class="block bt-bus">UPS CENTRALIZZATO<br>160 kVA</div>
-            <hr>
-            <div class="route-label calotta">DISTRIBUZIONE ALTA (CALOTTA)</div>
-            <div class="block">Illuminazione Rinforzo Sud</div>
-            <div class="block">Illuminazione Permanente (50%)</div>
+            <h3>CABINA SUD</h3>
+            <div class="box">
+                <span class="box-title">Scomparti MT</span>
+                Arrivo Rete + Linea Anello MT 20kV
+            </div>
+            <div class="box">
+                <span class="box-title">Trasformazione</span>
+                Trasformatore 1.250 kVA (Resina)
+            </div>
+            <div class="box">
+                <span class="box-title">Servizi Idrici</span>
+                Centrale Pompe Antincendio 55kW
+            </div>
+            <div class="box" style="border-color: #27ae60;">
+                <span class="box-title">Emergenza Centralizzata</span>
+                UPS di Cabina 160 kVA (VFI)
+            </div>
+            <div class="box" style="background: #d4edda;">
+                <span class="box-title">Calotta (Alta)</span>
+                Alimentazione Illuminazione Sud
+            </div>
         </div>
     </div>
 
-    <div class="footer">
-        <div style="width: 600px;">
-            <strong>NOTE TECNICHE:</strong><br>
-            - Cavi Potenza: FTG10OM1 0.6/1kV posati su passerelle Inox AISI 304 nel cavedio tecnico.<br>
-            - Interconnessione MT: Cavo RG7H1R 20kV ad anello per soccorso mutuo totale.<br>
-            - PMV Svincoli: Alimentazione in alluminio (ARG7R) con partenza da quadri servizi cabina.
+    <div class="footer-area">
+        <div style="font-size: 22px; width: 800px;">
+            <strong>NOTE DI PROGETTO:</strong><br>
+            1. I quadri di bypass in piazzola includono kit di ventilazione IP65 e mini-UPS per la continuità del PLC.<br>
+            2. Cavi di potenza nel cavedio posati su passerelle a scaletta Inox AISI 304.<br>
+            3. I PMV esterni sono alimentati con cavi in Alluminio ARG7R per limitare cadute di tensione e furti.
         </div>
         <div class="cartiglio">
-            PROGETTO: Variante Pedemontana delle Marche<br>
-            OGGETTO: Schema Blocchi Impianti Elettrici Galleria Sassoferrato<br>
-            SCALA: N.T.S. (Ottimizzato per A1)<br>
-            STATO: Progetto Definitivo
+            <strong>PROGETTO:</strong> Pedemontana delle Marche<br>
+            <strong>OPERA:</strong> Galleria Sassoferrato (1.864 m)<br>
+            <strong>SCALA:</strong> Ottimizzato per A1<br>
+            <strong>DATA:</strong> Marzo 2024
         </div>
     </div>
 </div>
